@@ -13,19 +13,54 @@ const key = {
             }
         ])
 
-        const key = keyManager.setKey(input.key);
+        const inputTwo = await inquirer.prompt([
+          {
+            type: "input",
+            name: "label",
+            message: "Enter api key label".green,
+          },
+        ]);
+
+        const key = keyManager.setKey(inputTwo.label, input.key);
 
         if (key) {
             console.log("API key set successfully".blue);
         }
     },
 
-    show() {
-        console.log("This is the show function");
+    async show() {
+        try {
+
+            const input = await inquirer.prompt([{
+                type: "input",
+                name: "label",
+                message: "Enter Api key label"
+            }])
+
+            const key = new KeyManager();
+            const Apikey = key.getKey(input.label);
+            console.log(Apikey);
+            return Apikey;
+        } catch (err) {
+            console.log(err);
+        }
     },
 
-    remove() {
-        console.log("this is the remove function");
+    async remove() {
+        try {
+
+            const input = await inquirer.prompt([{
+                type: "input",
+                name: "label",
+                message: "Enter Api key label"
+            }])
+
+            const key = new KeyManager();
+            key.deleteKey(input.label);
+            console.log(`${input.label} deleted successfully`);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }
